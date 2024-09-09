@@ -20,10 +20,10 @@ adx | proprietary audio file system | ➖ |
 afs | Archive File System | ✔ |
 dat (gpda) | archive file used by guyzware | 〰️ |
 iso | ISO file | ✔ |
-ks | script file use by kirikiri | ✔ |
+ks | script file used by kirikiri | ✔ |
 obj (gpda) | script object used by guyzware | ❌ |
 pmf | PSP movie file | ➖ |
-xp3 | archive file use by kirikiri | ✔ |
+xp3 | archive file used by kirikiri | ✔ |
 
 ## TODO
 
