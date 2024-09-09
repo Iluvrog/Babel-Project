@@ -1,0 +1,32 @@
+{
+    "none":{
+        "MasterKey": "0",
+        "BakKey0": "0",
+        "BakKey1": "0",
+        "FirstXor": "0"
+    },
+    "neko_vol1":{
+        "MasterKey": "0x1548E29C",
+        "BakKey0": "0x00",
+        "BakKey1": "0xD7",
+        "FirstXor": "0"
+    },
+    "neko_vol1_steam":{
+        "MasterKey": "0x44528B87",
+        "BakKey0": "0x00",
+        "BakKey1": "0x23",
+        "FirstXor": "0"
+    },
+    "neko_vol0":{
+        "MasterKey": "0x1548E29C",
+        "BakKey0": "0x9C",
+        "BakKey1": "0xD7",
+        "FirstXor": "1"
+    },
+    "neko_vol0_steam":{
+        "MasterKey": "0x44528B87",
+        "BakKey0": "0x87",
+        "BakKey1": "0x23",
+        "FirstXor": "1"
+    }
+}
