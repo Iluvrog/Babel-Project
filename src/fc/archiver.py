@@ -2,7 +2,7 @@ from .AFS.extractAFS import extract as extractAFS
 from .AFS.repackAFS import repack as repackAFS
 
 from .ISO.extractISO import extract as extractISO
-from .ISO.extractISO import repack as repackISO
+from .ISO.repackISO import repack as repackISO
 
 from .XP3.extractXP3 import extract as extractXP3
 from .XP3.repackXP3 import repack as repackXP3
