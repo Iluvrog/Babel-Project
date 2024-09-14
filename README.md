@@ -18,6 +18,7 @@ Extension | Description of file | Supported |
 :---: | :----: | :---:
 adx | proprietary audio file system | ➖ |
 afs | Archive File System | ✔ |
+cpk | Criware archive format | 〰 |
 dat (gpda) | archive file used by guyzware | 〰️ |
 iso | ISO file | ✔ |
 ks | script file used by kirikiri | ✔ |
@@ -31,9 +32,15 @@ xp3 | archive file used by kirikiri | ✔ |
 
 - Delete the old folder (after the HTML translation)
 
+#### CPK
+
+- Adding the repackCPK
+
 #### translate
 
 - Adding the HTML translate (see old)
+
+- Adding the CPK translate
 
 - Adding the GPDA obj translate (see otherformat)
 
@@ -45,7 +52,7 @@ xp3 | archive file used by kirikiri | ✔ |
 
 ### UI
 
-Refont the GUI
+- Refont the GUI
 
 ## References
 
@@ -54,6 +61,12 @@ Refont the GUI
 Scripts based on the work of:
 
 - Nickworokin, https://github.com/nickworonekin/puyotools
+
+### cpk
+
+Scripts based on the work of:
+
+- esperknight, https://github.com/esperknight/CriPakTools/
 
 ### GPDA dat:
 
