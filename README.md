@@ -32,9 +32,17 @@ xp3 | archive file used by kirikiri | ✔ |
 
 - Delete the old folder (after the HTML translation)
 
-#### CPK
+#### format
+
+##### CPK
 
 - Adding the repackCPK
+
+##### otherformat
+
+- Adding the repack for GDPA dat
+
+- Find how to read GPDA obj file (see translate)
 
 #### translate
 
@@ -43,12 +51,6 @@ xp3 | archive file used by kirikiri | ✔ |
 - Adding the CPK translate
 
 - Adding the GPDA obj translate (see otherformat)
-
-#### otherformat
-
-- Adding the repack for GDPA dat
-
-- Find how to read GPDA obj file (see translate)
 
 ### UI
 
