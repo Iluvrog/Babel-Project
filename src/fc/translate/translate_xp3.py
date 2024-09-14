@@ -1,4 +1,4 @@
-from fc.XP3 import extractXP3, repackXP3
+from fc.format.XP3 import extractXP3, repackXP3
 from .translate_ks import translate_ks
 from fc.get_files import get_files
 
