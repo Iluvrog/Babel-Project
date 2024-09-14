@@ -1,11 +1,11 @@
-from .AFS.extractAFS import extract as extractAFS
-from .AFS.repackAFS import repack as repackAFS
+from .format.AFS.extractAFS import extract as extractAFS
+from .format.AFS.repackAFS import repack as repackAFS
 
-from .ISO.extractISO import extract as extractISO
-from .ISO.repackISO import repack as repackISO
+from .format.ISO.extractISO import extract as extractISO
+from .format.ISO.repackISO import repack as repackISO
 
-from .XP3.extractXP3 import extract as extractXP3
-from .XP3.repackXP3 import repack as repackXP3
+from .format.XP3.extractXP3 import extract as extractXP3
+from .format.XP3.repackXP3 import repack as repackXP3
 
 from os import path, makedirs
 from tempfile import gettempdir
