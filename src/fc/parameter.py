@@ -1,11 +1,14 @@
 from json import load, dump
-
+from os.path import join
 
 GLOBAL_VARS = None
 
 def read_json(path = "config.json"):
     global GLOBAL_VARS
-    GLOBAL_VARS = load(open(path))
+    try:
+        GLOBAL_VARS = load(open(path, encoding='utf-8'))
+    except FileNotFoundError:
+        GLOBAL_VARS = load(open(join("..", path), encoding='utf-8'))
         
 def get(*strings):
     if GLOBAL_VARS == None:

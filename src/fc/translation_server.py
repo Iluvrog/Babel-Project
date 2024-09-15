@@ -40,7 +40,7 @@ def open_server(new_terminal = True):
     else:
         command = "cd " + path + " && " + '"' + server + '"'
         
-    #print(command)
+    print(command)
     system(command)
     
 def close_server():
