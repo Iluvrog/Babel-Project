@@ -25,6 +25,7 @@ ks | script file used by kirikiri | ✔ |
 obj (gpda) | script object used by guyzware | ❌ |
 pmf | PSP movie file | ➖ |
 xp3 | archive file used by kirikiri | ✔ |
+xtx | image format | 〰 |
 
 ## TODO
 
