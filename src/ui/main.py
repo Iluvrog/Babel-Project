@@ -39,10 +39,6 @@ class Babel(Frame):
         from fc.Cache import Cache
         cache = Cache()
         cache.write()
-        #print("close stdout")
-        #from sys import stdout
-        #stdout.kill()
-        #stdout.join()
         
     # The home directory is where the projects are inside the file system
     def create_home_directory(self):
