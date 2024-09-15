@@ -28,7 +28,7 @@ class Babel(Frame):
         
         # The shell frame where are show up the 'print(sys.sdtout)'
         self.init_shellframe()
-        self.toolbar.open("test")
+        #self.toolbar.open("test")
         
         # When I quit the processus I want to save the cache and end the tread using updating the shell frame
         self.master.bind('<Destroy>', self.exit) #I suppose it works ...
@@ -39,10 +39,10 @@ class Babel(Frame):
         from fc.Cache import Cache
         cache = Cache()
         cache.write()
-        print("close stdout")
-        from sys import stdout
-        stdout.kill()
-        stdout.join()
+        #print("close stdout")
+        #from sys import stdout
+        #stdout.kill()
+        #stdout.join()
         
     # The home directory is where the projects are inside the file system
     def create_home_directory(self):
