@@ -1,5 +1,9 @@
-from .parameter import get
-from .Cache import Cache
+try:
+    from .parameter import get
+    from .Cache import Cache
+except ImportError:
+    from parameter import get
+    from Cache import Cache
 
 from os import system
 from requests import post
