@@ -43,7 +43,7 @@ class Project():
             
     def open(self, file):
         absolute_path = path.join(self.path, *self.insidepath, file)
-        system(absolute_path)
+        system('"' + absolute_path + '"')
         
     def delete(self, file, dir = False):
         absolute_path = path.join(self.path, *self.insidepath, file)
