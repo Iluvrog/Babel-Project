@@ -54,7 +54,6 @@ class PrintRedirector(threading.Thread):
 
     def run(self):
         while self.live:
-            print("flush", file = sys.stderr)
             self.flush()
             sleep(0.1)
             
