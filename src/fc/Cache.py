@@ -1,4 +1,7 @@
-from .parameter import get
+try:
+    from .parameter import get
+except ImportError:
+    from parameter import get
 
 from threading import Lock
 from os import path
