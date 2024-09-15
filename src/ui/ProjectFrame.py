@@ -7,7 +7,7 @@ from tkinter import messagebox, filedialog
 
 from os import path
 from shutil import copy, copytree
-from threading import Thread
+from concurrent.futures import ThreadPoolExecutor
 
 class ProjectFrame(Frame):
     
@@ -34,24 +34,26 @@ class ProjectFrame(Frame):
         self.listbox.bind("<Button-2>", self.middle_click)
         self.listbox.pack()
         
+        self.executor = ThreadPoolExecutor()
+        
         self.project = None
         
     def init_menu_right_click(self):
         self.menu = Menu(self, tearoff = False)
         
         self.menu_pack = Menu(self.menu, tearoff= False)
-        self.menu.add_command(label = "Pack", command = self.repack)
+        self.menu.add_command(label = "Pack", command = lambda: self.executor.submit(self.repack))
         
-        self.menu.add_command(label = "Extract", command = self.extract)
-        
-        self.menu.add_separator()
-        
-        self.menu.add_command(label = "Translate", command = self.translate)
-        self.menu.add_command(label = "Patch", command = self.patch)
+        self.menu.add_command(label = "Extract", command = lambda: self.executor.submit(self.extract))
         
         self.menu.add_separator()
         
-        self.menu.add_command(label = "Delete", command = self.deletefile)
+        self.menu.add_command(label = "Translate", command = lambda: self.executor.submit(self.translate))
+        self.menu.add_command(label = "Patch", command = lambda: self.executor.submit(self.patch))
+        
+        self.menu.add_separator()
+        
+        self.menu.add_command(label = "Delete", command = lambda: self.executor.submit(self.deletefile))
         
     def double_click(self, evt):
         clicked = self.listbox.selection_get()
@@ -165,10 +167,9 @@ class ProjectFrame(Frame):
     def extract(self):
         for file in self.listbox.selection_get().split("\n"):
             file = path.join(self.project.get_actual_path(), file)
-            t = Thread(target = self.extractThread, args = [file])
-            t.start()
+            self.extractSingle(file)
             
-    def extractThread(self, file):
+    def extractSingle(self, file):
         try:
             extract(file)
         except Exception as e:

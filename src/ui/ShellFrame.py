@@ -22,6 +22,7 @@ class ShellFrame(Frame):
         self.listbox.pack()
         
         self.printredirector = PrintRedirector(self.listbox)
+        self.printredirector.daemon = True
         self.printredirector.start()
         
         sys.stdout = self.printredirector
@@ -53,6 +54,7 @@ class PrintRedirector(threading.Thread):
 
     def run(self):
         while self.live:
+            print("flush", file = sys.stderr)
             self.flush()
             sleep(0.1)
             
