@@ -9,25 +9,21 @@ def translate_ks(inpath, outpath):
     
     text = infile.read()
     
-    text = case_name(text)
-    text = case_link(text)
-    text = case_sentence(text)
-    
-    text = sanitize(text)
+    text = translate_text(text)
     
     outfile.write(text)
     
     infile.close()
     outfile.close()
     
-def split_sentence(sentence, call_line = "", size_max = 70):
+def split_sentence(sentence, size_max = 45):
     separator = "[r]"
     words = sentence.split(" ")
     lines = []
     
     line = ""
     for word in words:
-        if len(line) < size_max:
+        if len(line) + len(word) < size_max:
             line += word + " "
         else:
             line = line[:-1] + separator
@@ -38,111 +34,175 @@ def split_sentence(sentence, call_line = "", size_max = 70):
         lines.append(line[:-1])
         
     for i in range(2, len(lines)-1, 3):
-        if call_line.startswith("[name"):
-            lines[i] = lines[i].replace("[r]", "」[plc]\n")
-        else:
-            lines[i] = lines[i].replace("[r]", "[plc]\n")
-        lines[i] += call_line
+        lines[i] = lines[i].replace("[r]", "[p][cm]")
     
     return "\n".join(lines)
     
-def case_name(raw):
-    base = "[name name="
-    
-    new = ""
-    
-    while raw != "":
-        if not raw.startswith(base):
-            new += raw[0]
-            raw = raw[1:]
-            continue
-        new += base
-        raw = raw[len(base):]
-        
-        end_name = raw.find("]")
-        name = raw[:end_name]
-        raw = raw[end_name:]
-        
-        trad_name = translate_sentence(name)
-        if trad_name is None:
-            raise Exception("Problem translation, check the server")
-        new += trad_name
-    
-    return new
 
-def case_link(raw):
-    base = "[link target="
-    end_base = "]"
-    end = "[endlink]"
+def translate_text(text):
     
-    new = ""
-    while raw != "":
-        if not raw.startswith(base):
-            new += raw[0]
-            raw = raw[1:]
+    lines = text.split("\n")
+    
+    trad_lines = []
+    
+    start_skip = [";", "*"]
+    
+    isInMacro = 0
+    isIf = False
+    isScript = False
+    
+    actual_line = ""
+    
+    actual_macro = ""
+    
+    for line in lines:
+        
+        if isIf:
+            trad_lines.append(line)
+            if line == "@endif" or line == "[endif]":
+                isIf = False
             continue
         
-        find_end_base = raw.find(end_base) + len(end_base)
-        new += raw[:find_end_base]
-        raw = raw[find_end_base:]
-        
-        find_end_link = raw.find(end)
-        sentence = raw[:find_end_link]
-        raw = raw[find_end_link + len(end):]
-        
-        trad_sentence = translate_sentence(sentence)
-        if trad_sentence is None:
-            raise Exception("Problem translation, check the server")
-        new += split_sentence(trad_sentence)
-        
-        new += end
-        
-    return new
-
-def case_sentence(text):
-    
-    end_speech = "[plc]"
-    
-    raw_lines = text.split("\n")
-    new_lines = []
-    
-    speech = False
-    raw = ""
-    call_speech = ""
-    for line in raw_lines:
-        if line.startswith(";"):
-            new_lines.append(line)
+        if isScript:
+            trad_lines.append(line)
+            if line == "@endscript" or line == "[endscript]":
+                isScript = False
             continue
-        if speech:
-            stop_line = line.startswith("[")
-            if not stop_line:
-                raw += line
-            if end_speech in raw or stop_line:
-               speech = False
-               sentence = raw.replace("[r]", " ")
-               sentence = sentence.replace(end_speech, "")
-               translation = translate_sentence(sentence)
-               if translation is None:
-                   raise Exception("Problem translation, check the server")
-               translation = translation.replace("[", "『")
-               translation = translation.replace("]", "』")
-               split = split_sentence(translation, call_speech)
-               if not stop_line:
-                   split += end_speech
-               if split != "":
-                   new_lines.append(split)
-               if stop_line:
-                   new_lines.append(line)
-        else:
-            new_lines.append(line)
-            if line.startswith("[name ") or line.startswith("[x]"):
-                call_speech = line
-                raw = ""
-                speech = True
+        
+        if len(line) == 0:
+            trad_lines.append(line)
+            continue
+        
+        if line[0] in start_skip:
+            trad_lines.append(line)
+            continue
+        
+        if line[0] == "@":
+            if actual_line != "":
+                trad_lines.append(trad_sentence(actual_line))
+                actual_line = ""
+            trad_lines.append(trad_macro(line))
+            if line.startswith("@iscript"):
+                isScript = True
+            if line.startswith("@if "):
+                isIf = True
+            continue
+        
+        for i in range(len(line)):
+            
+            char = line[i]
+            
+            if not isInMacro and char == "[" and (i == len(line)-1 or line[i+1] != "["):
                 
-    return "\n".join(new_lines)
+                isInMacro += 1
+                
+                actual_macro = "["
+                continue
+            
+            if isInMacro:
+                actual_macro += char
+                
+                if char == "[":
+                    isInMacro += 1
+                
+                if char == "]":
+                    
+                    isInMacro -= 1
+                    
+                    if not isInMacro:
+                        if actual_macro == "[r]":
+                            actual_macro = ""
+                            if actual_line != "":
+                                actual_line += " "
+                            continue
+                        
+                        if actual_line != "":
+                            
+                            trad_lines.append(trad_sentence(actual_line))
+                            actual_line = ""
+                          
+                        trad_lines.append(trad_macro(actual_macro))
+                        
+                        if actual_macro.startswith("[if "):
+                            isIf = True
+                        if actual_macro == "[iscript]":
+                            isScript = True
+                            
+                        actual_macro = ""
+                        continue
+            else: 
+                
+                actual_line += char
+               
+        if actual_line != "" and actual_line[-1] != " ":
+            actual_line += " "
+            
+        if actual_line != "":
+            trad_lines += trad_sentence(actual_line)
+            actual_line = ""
 
-def sanitize(text):
-    text = text.replace("\2014", "-")
+    return "\n".join(trad_lines)
+
+def trad_macro(macro):
     
-    return text
+    # If I create a maco
+    create_macro = "macro "
+    if macro[1:1+len(create_macro)] == create_macro:
+        return macro
+    
+    # If I don't have a name arg in macro
+    name_args = [" name ", " name="]
+    pos_name = -1
+    
+    for name in name_args:
+        pos_name = macro.find(name)
+        if pos_name != -1:
+            break
+      
+    if pos_name == -1:
+        return macro
+    
+    # If I have a name arg
+    equal_pos = macro[pos_name:].find("=")
+    if equal_pos == -1:
+        return macro
+    equal_pos += pos_name
+    
+    trad_macro = macro[:equal_pos+1]
+    macro = macro[equal_pos+1:]
+    name = ""
+    
+    while macro.startswith(" "):
+        trad_macro += " "
+        macro = macro[1:]
+      
+    end_name_char = " "
+    if macro.startswith("'") or macro.startswith('"'):
+        trad_macro += macro[0]
+        end_name_char = macro[0]
+        macro = macro[1:]
+        
+    end_name_pos = macro.find(end_name_char)
+    
+    name = macro[:end_name_pos]
+    macro = macro[end_name_pos:]
+    
+    if name != "%name":
+        trad_macro += translate_sentence(name)
+    else:
+        trad_macro += name
+    trad_macro += macro
+    
+    return trad_macro
+
+def trad_sentence(line):
+    
+    line = line.replace("[r]", " ")
+    line = line.replace("\n", " ")
+    
+    while "  " in line:
+        line = line.replace("  ", " ")
+        
+    line = translate_sentence(line)
+    
+    return split_sentence(line)
