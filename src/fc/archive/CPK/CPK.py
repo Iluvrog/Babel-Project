@@ -100,12 +100,12 @@ def readUTFData(file):
 def decryptUTF(data):
     result = bytearray()
     
-    m = 0x0000655f
-    t = 0x00004115
+    m = 0x655f
+    t = 0x4115
     
     for b in data:
         result.append(b ^ (m & 0xff)) # I take only the last byte
-        m = (m*t) % 2<<32
+        m = (m*t) % 1<<32
         
     return bytes(result)
 
@@ -260,7 +260,7 @@ def readITOCdata(file, ITOCOffset, ContentOffset, Align, filetable):
         if (value % Align) == 0:
             baseOffset += value
         else:
-            baseOffset += value - (Align - (value % Align))
+            baseOffset += value + (Align - (value % Align))
 
 # What does this function ?!
 def readGTOCdata(file, GTOCOffset, filetable):
