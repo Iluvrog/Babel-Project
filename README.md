@@ -39,6 +39,8 @@ xtx | image format | 〰 |
 
 - Adding the repackCPK
 
+- Rewrite extractCPK, seem to bug a little
+
 ##### otherformat
 
 - Adding the repack for GDPA dat
@@ -48,6 +50,8 @@ xtx | image format | 〰 |
 #### translate
 
 - Adding the HTML translate (see old)
+
+- Write a better translateks, can possibly has some problem in some case
 
 - Adding the CPK translate
 
@@ -76,6 +80,12 @@ Scripts based on the work of:
 Scripts based on the work of:
 
 - Giacomo Stelluti Scala, http://rsk.twilight.free.fr/ps2/index.php5 (tenoritool)
+
+### ks
+
+Scripts based on the work of:
+
+- https://kirikirikag.sourceforge.net/contents/
 
 ### xp3
 
