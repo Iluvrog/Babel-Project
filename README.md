@@ -33,7 +33,7 @@ xtx | image format | 〰 |
 
 - Delete the old folder (after the HTML translation)
 
-#### format
+#### archive
 
 ##### CPK
 

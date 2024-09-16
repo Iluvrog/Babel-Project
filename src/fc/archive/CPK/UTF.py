@@ -183,11 +183,11 @@ class UTF():
                 
             temp_type = self.get_Column_Type(row, Name)
             match temp_type:
-                case 1 | 2:
+                case 2 | 3:
                     return 0xffff
-                case 3 | 4:
+                case 4 | 5:
                     return 0xffffffff
-                case 5 | 6:
+                case 6 | 7:
                     return 0xffffffffffffffff
                 
             return 0
