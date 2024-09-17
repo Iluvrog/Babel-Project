@@ -95,14 +95,6 @@ Scripts based on the work of:
 
 - SmilingWolf, https://bitbucket.org/SmilingWolf/xp3tools-updated
 
-### GPDA obj
-
-See
-
-- https://github.com/xyzz/taiga-aisaka
-
-- https://sourceforge.net/p/oreimo/code/HEAD/tree/
-
 ### Libraries use
 
 pycdlib, https://pypi.org/project/pycdlib/
