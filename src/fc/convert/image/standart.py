@@ -15,7 +15,7 @@ def read(input_path):
 
 def write(output_path, imageAbs, format):
     mode = MODE
-    if format == "JPEG":
+    if format in ["JPEG", "JPG"]:
         mode = "RGB"
     
     im = Image.new(mode = mode, size = (imageAbs.width, imageAbs.height))

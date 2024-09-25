@@ -8,7 +8,7 @@ except ImportError:
 from argparse import ArgumentParser
 from os.path import splitext
     
-STANDART_FORMAT = ["JPEG", "PNG"]
+STANDART_FORMAT = ["JPEG", "JPG", "PNG"]
 
 def get_function(format, read):
     
